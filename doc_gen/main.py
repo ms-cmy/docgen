@@ -2,7 +2,6 @@ import requests
 import json
 import dotenv
 from typing import Union
-import logging
 import os
 
 
@@ -29,6 +28,3 @@ def rag_request(phrases: Union[list[str]],
         print(r.text)
         raise Exception("deu merda")
     return r
-
-
-rag_request(['Testando embedding teste 123 meu cachorro é lindo'])
