@@ -2,10 +2,17 @@ from transformers import AutoTokenizer, AutoModel
 import torch.nn.functional as F
 import torch
 from torch import Tensor
+import logging
+
+FORMAT = '%(asctime)s - %(message)s'
+logging.basicConfig(level=logging.INFO, format=FORMAT, datefmt="%Y-%m-%d %H:%M:%S")
+logger = logging.getLogger(__name__)
+
+logging.info("Carregando modelo")
 
 device = torch.device("cuda")
 
-path = r"C:\Estudos\vstl32ol\api_endpoint_models\models\paraphrase-multilingual-MiniLM-L12-v2"
+path = r"api_endpoint_models\models\paraphrase-multilingual-MiniLM-L12-v2"
 
 def mean_pooling(model_output, attention_mask):
     token_embeddings = model_output[0]
@@ -15,6 +22,8 @@ def mean_pooling(model_output, attention_mask):
 tokenizer = AutoTokenizer.from_pretrained(path)
 model = AutoModel.from_pretrained(path)
 model.to(device)
+
+logging.info("Modelo carregado")
 
 def run_model(sentences) -> Tensor:
     encoded_input = tokenizer(sentences, padding=True, truncation=True, return_tensors='pt')

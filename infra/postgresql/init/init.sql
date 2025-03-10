@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS documents (
     function_name TEXT NOT NULL,
     embedding VECTOR(384),
     original_text TEXT NOT NULL,
+    source_code TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
