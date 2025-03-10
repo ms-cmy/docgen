@@ -45,7 +45,10 @@ class DocGen:
     def create_filepaths(self) -> list[str]:
         filenames = []
         for i in self.path:
-            filenames.append(list_files_recursively_os_walk(i))
+            if os.path.isdir(i):
+                filenames.append(list_files_recursively_os_walk(i))
+            else:
+                filenames.append([i])
         return list(chain.from_iterable(filenames))
 
     def load_code_file(self, path: str) -> str:
