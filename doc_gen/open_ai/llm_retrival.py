@@ -1,22 +1,24 @@
 from openai import OpenAI
-import dotenv
 import os
 
-dotenv.load_dotenv()
+
+API_KEY = os.environ['TOKEN']
+GCP_MODEL = os.environ['GOOGLE_MODEL']
 
 client = OpenAI(
     api_key=os.environ['TOKEN'],
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
 
-def format_answer(answer: dict):
+
+def format_answer(answer: list[dict]):
     values = []
-    for en, (key, item) in enumerate(answer.items()):
-        values.append({en: item[1]})
+    for en, i in enumerate(answer):
+        values.append({en: i['similarity'], 'code': i['source_code']})
     return values
 
 def generate_function_embedding(function: str, general_context=None):
     chat = client.chat.completions.create(
-        model="gemini-2.0-flash-lite",
+        model=GCP_MODEL,
         messages=[{"role": "system", "content": """Create documentation text for the following code, given that: 
                                                     - Describe ONLY the core purpose and validation logic
                                                     - Use active voice without mentioning "function" or "this". Keep imperative voice.
@@ -46,7 +48,7 @@ def get_embeddings_llm(query: str, answer: str = None):
                 {"role": "system", "content": f"given this answers from the vector store, in no particular order are: {answer}, return to the user the one that mostly attend to his question."} if answer is not None else None]
     messages = list(filter(None, messages))
     chat = client.chat.completions.create(
-        model="gemini-2.0-flash-lite",
+        model=GCP_MODEL,
         messages=messages,
         temperature=0,
         max_tokens=400)
