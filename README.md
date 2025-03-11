@@ -221,3 +221,13 @@ exemplos de docs gerados sobre a documentação da primeira tentativa se encontr
 
 
 [a doc mais recente](docs_gerados_sozinhos/README_11_03_202518:24:43.md) está documentando a si própria (essa biblioteca que está gerando os readme.md!) [foi utilizado esse template](code_generation.yaml)
+
+
+O requirements.txt contém mais bibliotecas do que o necessário, pois contém algumas da tentativa anterior, mas caso queiram testar é possível.
+
+será necessária as seguintes variáveis de ambiente:
+
+```txt (essa apikey eu peguei do https://aistudio.google.com/prompts/new_chat, não sei se funcionaria com a key default do gcloud auth etc)
+GOOGLE_API_KEY=**
+BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
+```
