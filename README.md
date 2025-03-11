@@ -200,7 +200,9 @@ Então, esse CLI irá precisar apontar para um template, é extremamente fácil 
 Logo, parti para a criação da biblioteca que se encontra em: [Lib](doc_gen) (arquivos sem __init__.py NÃO entram na geração da biblioteca pelo jeito que está sendo feito pelo [setup.py](setup.py))
 
 [o cli foi feito rapidamente utilizando click](doc_gen/cli/cli.py)
+
 [com utilização de langchain](doc_gen/agent_doc_gen/long_agents.py) foi extremamente rápido produzir um MVP.
+
 [um exemplo extremamente simples de yaml](example.yaml)
 
 para a instalação:
