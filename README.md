@@ -227,7 +227,9 @@ O requirements.txt contém mais bibliotecas do que o necessário, pois contém a
 
 será necessária as seguintes variáveis de ambiente:
 
-```txt (essa apikey eu peguei do https://aistudio.google.com/prompts/new_chat, não sei se funcionaria com a key default do gcloud auth etc)
+(essa apikey eu peguei do https://aistudio.google.com/prompts/new_chat, não sei se funcionaria com a key default do gcloud auth etc)
+
+```txt 
 GOOGLE_API_KEY=**
 BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
 ```
