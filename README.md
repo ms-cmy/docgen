@@ -71,7 +71,7 @@ for i, a in zip([query_1, query_2, query_3, query_4], ["new_random", "new_matrix
     publish_retrieval(function_name=a, contents=i)
 ```
 
-foi utilizado esse código em rust pois essas funções realizam algo extremamente semelhante: gerar matrix utilizando o struct (semelhante a classe em python) para criar uma matrix nova.
+foi utilizado esse código em rust pois essas funções realizam algo extremamente semelhante: gerar matrix utilizando o struct "Mat" (semelhante a classe em python) para criar uma matrix nova.
 
 no terminal que está enviando as solicitações, podemos ver:
 
