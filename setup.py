@@ -9,7 +9,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'desafio-globo=doc_gen.cli.cli:desafio_globo', 
+            'doc-gen=doc_gen.cli.cli:doc_gen', 
         ],
     },
 )

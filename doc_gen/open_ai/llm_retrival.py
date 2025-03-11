@@ -2,11 +2,11 @@ from openai import OpenAI
 import os
 
 
-API_KEY = os.environ['TOKEN']
+API_KEY = os.environ['GOOGLE_API_KEY']
 GCP_MODEL = os.environ['GOOGLE_MODEL']
 
 client = OpenAI(
-    api_key=os.environ['TOKEN'],
+    api_key=API_KEY,
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
 
 

@@ -32,3 +32,5 @@ def get_more_complex_retrival(query: str):
     r = db_retrieval(query)
     llm_final = get_embeddings_llm(query=query, answer=r.json())
     return llm_final
+
+
