@@ -1,4 +1,4 @@
-paths: ['doc_gen', 'setup.py']
+paths: ['doc_gen/agent_doc_gen', 'setup.py', 'doc_gen/cli']
 
 code_master_template:
   prompt: >
