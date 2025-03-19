@@ -41,7 +41,7 @@ class DocGen:
     def load_prompt(self):
         self.code_master_prompt = PromptTemplate(template=self.code_master['prompt'], input_variables=['file_content'])
         self.readme_master_prompt = PromptTemplate(template=self.readme_master['prompt'], input_variables=['summaries'])
-    
+
     def create_filepaths(self) -> list[str]:
         filenames = []
         for i in self.path:

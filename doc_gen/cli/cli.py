@@ -6,6 +6,8 @@ from doc_gen.agent_doc_gen import long_agents
 @click.option('--file', '-f', multiple=False, help='um arquivo yaml')
 def doc_gen(file):
     click.echo("STARTING...")
+    if file is None:
+        click.echo("Por favor, passe o yaml.")
     if os.path.exists(file):
         click.echo(f"arquivo: {file}")
         long_agents.docgen_runner(file)

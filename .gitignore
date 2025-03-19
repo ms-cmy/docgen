@@ -7,3 +7,6 @@ runner.py
 
 infra/postgresql/data/*
 !infra/postgresql/data/.gitkeep
+
+build/
+docgen.egg-info

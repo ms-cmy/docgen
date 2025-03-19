@@ -1,4 +1,4 @@
-paths: ['doc_gen/agent_doc_gen', 'setup.py', 'doc_gen/cli']
+paths: ['api_endpoint_models', 'infra']
 
 code_master_template:
   prompt: >
