@@ -49,7 +49,8 @@ class DocGen:
                 filenames.append(list_files_recursively_os_walk(i))
             else:
                 filenames.append([i])
-        return list(chain.from_iterable(filenames))
+        filepaths = list(chain.from_iterable(filenames))
+        return [i for i in filepaths if "__pycache__" not in i]
 
     def load_code_file(self, path: str) -> str:
         with open(path, "r") as f:
