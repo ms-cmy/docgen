@@ -87,7 +87,7 @@ class DocGen:
         logger.info(f"calling LLM readme")
         readme_chain = self.readme_master_prompt | self.readme_master_llm
         final = readme_chain.invoke(input=formatted_summaries)
-        now = datetime.datetime.now().strftime("%d_%m_%Y, %H:%M:%S")
+        now = datetime.datetime.now().strftime("%d_%m_%Y_%H_%M_%S")
         with open(os.path.join(os.getcwd(), f"README_{now}.md"), "w") as readme_file:
             readme_file.write(final.content)
         with open(os.path.join(os.getcwd(), "file_summary"), "w") as summaries:
