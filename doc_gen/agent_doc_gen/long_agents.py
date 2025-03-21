@@ -88,9 +88,9 @@ class DocGen:
         readme_chain = self.readme_master_prompt | self.readme_master_llm
         final = readme_chain.invoke(input=formatted_summaries)
         now = datetime.datetime.now().strftime("%d_%m_%Y_%H_%M_%S")
-        with open(os.path.join(os.getcwd(), f"README_{now}.md"), "w") as readme_file:
+        with open(os.path.join(os.getcwd(), f"README_{now}.md"), "w", encoding="utf-8") as readme_file:
             readme_file.write(final.content)
-        with open(os.path.join(os.getcwd(), "file_summary"), "w") as summaries:
+        with open(os.path.join(os.getcwd(), "file_summary"), "w", encoding="utf-8") as summaries:
             for i in self.file_summaries:
                 summaries.write(json.dumps(i) + "\n")
         self.total_tokens += final.usage_metadata['total_tokens']
