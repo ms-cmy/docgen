@@ -97,6 +97,7 @@ class DocGen:
         readme_chain = self.readme_master_prompt | self.readme_master_llm
         final = readme_chain.invoke(input=formatted_summaries)
         now = datetime.datetime.now().strftime("%d_%m_%Y_%H_%M_%S")
+        final = self.remove_markdown_notation(final)
         # change this urgently
         if sys.platform.startswith("linux"):
             with open(os.path.join(os.getcwd(), f"README_{now}.md"), "w") as readme_file:
