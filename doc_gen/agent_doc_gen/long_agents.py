@@ -1,4 +1,5 @@
 # todo: needs to be generic between different models
+# TODO: hd to change everything to use vertex ai should create a separated file to use vertex ai
 from langchain_google_vertexai import VertexAI
 from langchain.prompts import PromptTemplate
 from itertools import chain
@@ -29,7 +30,7 @@ def list_files_recursively_os_walk(folder_path):
 class DocGen:
     def __init__(self):
         self.file_summaries = []
-        self.total_tokens = 0
+        # self.total_tokens = 0
         pass
 
     def load_template(self, template_path):
@@ -80,9 +81,9 @@ class DocGen:
             summary = summary_chain.invoke(input=file_code_content)
             self.file_summaries.append({
                 "filename": i,
-                "summary": summary.content
+                "summary": summary
             })
-            self.total_tokens += summary.usage_metadata['total_tokens']
+            # self.total_tokens += summary.usage_metadata['total_tokens']
 
     def generate_readme(self):
         formatted_summaries = "\n\n".join(
@@ -95,15 +96,15 @@ class DocGen:
         # change this urgently
         if sys.platform.startswith("linux"):
             with open(os.path.join(os.getcwd(), f"README_{now}.md"), "w") as readme_file:
-                readme_file.write(final.content)
+                readme_file.write(final)
         else:
             with open(os.path.join(os.getcwd(), f"README_{now}.md"), "w", encoding="utf-8") as readme_file:
-                readme_file.write(final.content)
+                readme_file.write(final)
         if debug:
             with open(os.path.join(os.getcwd(), "file_summary"), "w") as summaries:
                 for i in self.file_summaries:
                     summaries.write(json.dumps(i) + "\n")
-        self.total_tokens += final.usage_metadata['total_tokens']
+        # self.total_tokens += final.usage_metadata['total_tokens']
 
 def docgen_runner(template_path: str):
     logger.info("iniciando...")
@@ -114,4 +115,3 @@ def docgen_runner(template_path: str):
     doc.create_filepaths()
     doc.loop_over_files()
     doc.generate_readme()
-    logger.info(f"total tokens: {doc.total_tokens}")
