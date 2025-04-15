@@ -9,7 +9,6 @@ import logging
 import os
 import json
 import sys
-import regex
 
 FORMAT = '%(asctime)s - %(message)s'
 logging.basicConfig(level=logging.INFO, format=FORMAT, datefmt="%Y-%m-%d %H:%M:%S")
