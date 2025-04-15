@@ -1,3 +1,4 @@
+# todo: needs to be generic between different models
 from langchain_google_vertexai import VertexAI
 from langchain.prompts import PromptTemplate
 from itertools import chain
@@ -91,8 +92,13 @@ class DocGen:
         readme_chain = self.readme_master_prompt | self.readme_master_llm
         final = readme_chain.invoke(input=formatted_summaries)
         now = datetime.datetime.now().strftime("%d_%m_%Y_%H_%M_%S")
-        with open(os.path.join(os.getcwd(), f"README_{now}.md"), "w") as readme_file:
-            readme_file.write(final.content)
+        # change this urgently
+        if sys.platform.startswith("linux"):
+            with open(os.path.join(os.getcwd(), f"README_{now}.md"), "w") as readme_file:
+                readme_file.write(final.content)
+        else:
+            with open(os.path.join(os.getcwd(), f"README_{now}.md"), "w", encoding="utf-8") as readme_file:
+                readme_file.write(final.content)
         if debug:
             with open(os.path.join(os.getcwd(), "file_summary"), "w") as summaries:
                 for i in self.file_summaries:
