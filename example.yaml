@@ -23,6 +23,7 @@ readme_master_template:
              4. Key Features
             
              Make it professional but concise
+             write it all in brazilian portuguese
   llm:
     temperature: 0
     model: gemini-2.0-flash-thinking-exp-01-21

@@ -1,4 +1,4 @@
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_google_vertexai import VertexAI
 from langchain.prompts import PromptTemplate
 from itertools import chain
 import datetime
@@ -6,10 +6,13 @@ import yaml
 import logging
 import os
 import json
+import sys
 
 FORMAT = '%(asctime)s - %(message)s'
 logging.basicConfig(level=logging.INFO, format=FORMAT, datefmt="%Y-%m-%d %H:%M:%S")
 logger = logging.getLogger(__name__)
+
+debug = os.environ.get("DEBUG_DOCGEN", False)
 
 def list_files_recursively_os_walk(folder_path):
     file_list = []
@@ -35,8 +38,8 @@ class DocGen:
         self.path = template['paths']
 
     def load_llm(self):
-        self.code_master_llm = ChatGoogleGenerativeAI(**self.code_master['llm'])
-        self.readme_master_llm = ChatGoogleGenerativeAI(**self.readme_master['llm'])
+        self.code_master_llm = VertexAI(**self.code_master['llm'])
+        self.readme_master_llm = VertexAI(**self.readme_master['llm'])
     
     def load_prompt(self):
         self.code_master_prompt = PromptTemplate(template=self.code_master['prompt'], input_variables=['file_content'])
@@ -88,11 +91,12 @@ class DocGen:
         readme_chain = self.readme_master_prompt | self.readme_master_llm
         final = readme_chain.invoke(input=formatted_summaries)
         now = datetime.datetime.now().strftime("%d_%m_%Y_%H_%M_%S")
-        with open(os.path.join(os.getcwd(), f"README_{now}.md"), "w", encoding="utf-8") as readme_file:
+        with open(os.path.join(os.getcwd(), f"README_{now}.md"), "w") as readme_file:
             readme_file.write(final.content)
-        with open(os.path.join(os.getcwd(), "file_summary"), "w", encoding="utf-8") as summaries:
-            for i in self.file_summaries:
-                summaries.write(json.dumps(i) + "\n")
+        if debug:
+            with open(os.path.join(os.getcwd(), "file_summary"), "w") as summaries:
+                for i in self.file_summaries:
+                    summaries.write(json.dumps(i) + "\n")
         self.total_tokens += final.usage_metadata['total_tokens']
 
 def docgen_runner(template_path: str):
