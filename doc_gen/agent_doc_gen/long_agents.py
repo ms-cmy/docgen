@@ -9,6 +9,7 @@ import logging
 import os
 import json
 import sys
+import json
 
 FORMAT = '%(asctime)s - %(message)s'
 logging.basicConfig(level=logging.INFO, format=FORMAT, datefmt="%Y-%m-%d %H:%M:%S")
@@ -27,11 +28,33 @@ def list_files_recursively_os_walk(folder_path):
             file_list.append(full_path)
     return file_list
 
+def from_ipynb_to_list(mb_target: str,
+                     file: str = "main.py"):
+    code = json.load(open(mb_target))
+    py_file = []
+
+    for cell in code['cells']:
+        if cell['cell_type'] == 'code':
+            for line in cell['source']:
+                py_file.append(line)
+        elif cell['cell_type'] == 'markdown':
+            py_file.append("\n")
+            for line in cell['source']:
+                if line and line[0] == "#":
+                    py_file.append(line)
+            py_file.append("\n")
+
+    return py_file
+
+
 class DocGen:
     def __init__(self):
         self.file_summaries = []
         # self.total_tokens = 0
         pass
+
+    def parse_notebooks(self, path: str)-> list[str]:
+        return from_ipynb_to_list(path)
 
     def load_template(self, template_path):
         template = yaml.safe_load(open(template_path))
@@ -58,8 +81,12 @@ class DocGen:
         return [i for i in filepaths if "__pycache__" not in i]
 
     def load_code_file(self, path: str) -> str:
-        with open(path, "r") as f:
-            content = f.read()
+        # if/elif for different file formats that require some working
+        if path.endswith("ipynb"):
+            content = self.parse_notebooks(path)
+        else:
+            with open(path, "r") as f:
+                content = f.read()
         return content
 
     def loop_over_files(self):
@@ -71,6 +98,7 @@ class DocGen:
                 continue
             summary_chain = self.code_master_prompt | self.code_master_llm 
             file_code_content = self.load_code_file(i)
+            print(file_code_content)
             if file_code_content == "":
                 self.file_summaries.append({
                     "filename": i,
