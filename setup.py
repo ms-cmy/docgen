@@ -7,7 +7,8 @@ setup(
     install_requires=[
         'click',
         'langchain-google-genai',
-        'langchain'
+        'langchain',
+        'langchain-google-vertexai'
     ],
     entry_points={
         'console_scripts': [
