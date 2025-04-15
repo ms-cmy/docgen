@@ -9,6 +9,7 @@ import logging
 import os
 import json
 import sys
+import regex
 
 FORMAT = '%(asctime)s - %(message)s'
 logging.basicConfig(level=logging.INFO, format=FORMAT, datefmt="%Y-%m-%d %H:%M:%S")
@@ -84,6 +85,10 @@ class DocGen:
                 "summary": summary
             })
             # self.total_tokens += summary.usage_metadata['total_tokens']
+    
+    # TODO: XD?
+    def remove_markdown_notation(self, text: str) -> str:
+        return text[11:-3]
 
     def generate_readme(self):
         formatted_summaries = "\n\n".join(
