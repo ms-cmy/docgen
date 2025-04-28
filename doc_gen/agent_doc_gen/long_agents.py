@@ -9,7 +9,6 @@ import logging
 import os
 import json
 import sys
-import json
 
 FORMAT = '%(asctime)s - %(message)s'
 logging.basicConfig(level=logging.INFO, format=FORMAT, datefmt="%Y-%m-%d %H:%M:%S")
@@ -43,7 +42,6 @@ def from_ipynb_to_list(mb_target: str,
                 if line and line[0] == "#":
                     py_file.append(line)
             py_file.append("\n")
-
     return py_file
 
 
@@ -98,7 +96,6 @@ class DocGen:
                 continue
             summary_chain = self.code_master_prompt | self.code_master_llm 
             file_code_content = self.load_code_file(i)
-            print(file_code_content)
             if file_code_content == "":
                 self.file_summaries.append({
                     "filename": i,
