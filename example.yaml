@@ -1,29 +1,52 @@
 paths: ['doc_gen/agent_doc_gen', 'setup.py', 'doc_gen/cli']
+ignore_extensions: ['md']
 
-code_master_template:
+agent_code_master:
   prompt: >
           you are a code summarization expert. 
           summarize this file content: 
-          {file_content} 
+          {file_content}
           Concise Summary focus on code summary and explanability.
   llm:
     temperature: 0.2
     model: gemini-2.0-flash-lite
+  extensions: py
+  output: file_resume
 
-readme_master_template: 
+agent_notebook:
+  prompt: >
+        you are a code summarization expect.
+        summarize this notebook, given that it has been used to do data science:
+        {file_content}
+        explain the following points:
+        1. preprocessing
+        2. model used
+        3. anything that could be done to make it better
+  llm:
+    temperature: 0.2
+    model: gemini-2.0-pro
+  extensions: ipynb
+  output: file_resume
+
+agent_readme: 
   prompt: >
         You are a technical writer. Create a comprehensive README.md for this project based on the following file summaries:
 
-             {summaries}
+             {file_resume}
             
              Include the following sections:
              1. Project Overview
              2. File Structure
              3. Getting Started
              4. Key Features
+
+             if its from a ipynb doing datascience, write the following:
+             1. what is it doing
+             2. what could be done to make it better
             
              Make it professional but concise
              write it all in brazilian portuguese
   llm:
     temperature: 0
     model: gemini-2.0-flash-thinking-exp-01-21
+  input: file_resume
